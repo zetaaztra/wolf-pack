@@ -74,8 +74,9 @@ def fetch_all_data(symbols, days=200, existing_df=None):
         fetch_days = days
         print(f"[FETCH] Full fetch: Getting {fetch_days} days of data")
     
-    end_date = datetime.date.today()
-    start_date = end_date - datetime.timedelta(days=fetch_days)
+    # Fix: yfinance end_date is exclusive, so add 1 day to include today
+    end_date = datetime.date.today() + datetime.timedelta(days=1)
+    start_date = end_date - datetime.timedelta(days=fetch_days + 1)
     
     all_data = []
     failed = []
