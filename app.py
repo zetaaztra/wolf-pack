@@ -375,16 +375,16 @@ with tab_eyes:
             if not surgical_df.empty:
                 st.success(f"🔥 Found {len(surgical_df)} SURGICAL entries!")
                 # Sort by Status and then Kimi Score (which is timeframe-aware)
-                st.dataframe(surgical_df.sort_values(["Score (Kimi)", "Prob (AI)"], ascending=False), height=300)
+                st.dataframe(surgical_df.sort_values(["Prob (AI)", "Score (Kimi)"], ascending=False), height=300)
                 
                 with st.expander("Show All Scanned Stocks (Filtered)"):
-                    st.dataframe(final_df.sort_values(["Status", "Score (Kimi)", "Prob (AI)"], ascending=[False, False, False]), height=400)
+                    st.dataframe(final_df.sort_values(["Status", "Prob (AI)", "Score (Kimi)"], ascending=[False, False, False]), height=400)
             else:
                 # Dynamic Threshold Message
                 current_threshold = 0.60 if "3-7 Days" in timeframe else (0.80 if "1 Month" in timeframe else 0.70)
                 st.warning(f"⚠️ No High-Conviction ({int(current_threshold*100)}%+) entries found today. Market Armor is likely protecting you.")
                 # Sort by Status and then Kimi Score to ensure the list 'moves' when timeframe changes
-                st.dataframe(final_df.sort_values(["Status", "Score (Kimi)", "Prob (AI)"], ascending=[False, False, False]), height=400)
+                st.dataframe(final_df.sort_values(["Status", "Prob (AI)", "Score (Kimi)"], ascending=[False, False, False]), height=400)
         else:
             st.warning("AI finds no data to analyze today.")
 
