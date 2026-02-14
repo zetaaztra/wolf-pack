@@ -195,8 +195,8 @@ class WolfPackEngine:
                 'f6_rl': [float(metrics.get('r_l', 0))],
                 'f7_hurst': [float(metrics.get('hurst', 0.5))],
                 'f8_td': [float(metrics.get('td_count', 0))],
-                'f9_ensemble': [float(metrics.get('squeeze', 0))],
-                'f24_fundamental': [float(metrics.get('coiling', 0))]
+                'f9_squeeze': [float(metrics.get('squeeze', 0))],
+                'f10_coiling': [float(metrics.get('coiling', 0))]
             }
             
             X = pd.DataFrame(feat_dict).fillna(0)
