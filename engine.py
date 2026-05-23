@@ -84,17 +84,24 @@ class WolfPackEngine:
             if len(ts_clean) >= 20:
                 lags = range(2, 20)
                 tau = [np.std(np.subtract(ts_clean.values[lag:], ts_clean.values[:-lag])) for lag in lags]
+                tau = [t if t > 1e-6 else 1e-6 for t in tau]
                 hurst = np.polyfit(np.log(list(lags)), np.log(tau), 1)[0]
+                if np.isnan(hurst) or np.isinf(hurst): hurst = 0.5
         except:
             pass
         
         # 8. TD Count (Exhaustion)
         td_count = 0
-        for i in range(1, 10):
-            if len(close) > i+4 and float(close.iloc[-i]) > float(close.iloc[-i-4]):
-                td_count += 1
-            else:
-                break
+        try:
+            for i in range(0, 9): # Check last 9 candles
+                idx = -1 - i
+                if len(close) > abs(idx) + 4:
+                    if float(close.iloc[idx]) > float(close.iloc[idx-4]):
+                        td_count += 1
+                    else:
+                        break
+        except:
+            pass
         
         # 9. ATR
         atr = 1.0
